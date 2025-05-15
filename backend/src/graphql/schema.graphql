@@ -3,6 +3,34 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Lead {
+  email: String!
+  id: ID!
+  mobile: String!
+  name: String!
+  postcode: String!
+  services: [ServiceType!]!
+}
+
+type Mutation {
+  registerLead(data: RegisterInput!): Lead!
+}
+
 type Query {
-  hello: String!
+  getLeadById(id: Float!): Lead
+  getLeads: [Lead!]!
+}
+
+input RegisterInput {
+  email: String!
+  mobile: String!
+  name: String!
+  postcode: String!
+  services: [ServiceType!]!
+}
+
+enum ServiceType {
+  DELIVERY
+  PAYMENT
+  PICK_UP
 }

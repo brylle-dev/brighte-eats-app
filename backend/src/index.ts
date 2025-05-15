@@ -3,24 +3,17 @@ import "dotenv/config";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { PORT } from "./constants/env";
-import { buildSchema, Query, Resolver } from "type-graphql";
+import { buildSchema } from "type-graphql";
 import path from "path";
 import { connectToDatabase } from "./config/datasource";
-
-@Resolver()
-class HelloWorldResolver {
-  @Query(() => String)
-  async hello() {
-    return "Hello World!";
-  }
-}
+import { LeadResolver } from "./graphql/resolvers/lead.resolver";
 
 const boot = async () => {
   await connectToDatabase();
   console.log("Data Source has been initialized!");
   // build the GraphQL schema
   const schema = await buildSchema({
-    resolvers: [HelloWorldResolver],
+    resolvers: [LeadResolver],
     // Create 'schema.graphql' file with schema definition in current directory
     emitSchemaFile: path.resolve(__dirname, "graphql/schema.graphql"),
   });
