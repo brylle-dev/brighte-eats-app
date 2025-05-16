@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { ServiceType } from "../constants/serviceTypes";
 
 registerEnumType(ServiceType, {
@@ -8,7 +8,7 @@ registerEnumType(ServiceType, {
 
 @Entity()
 @ObjectType()
-export class Lead {
+export class Lead extends BaseEntity {
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
   readonly id!: number;

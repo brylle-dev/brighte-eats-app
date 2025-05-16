@@ -19,7 +19,6 @@ export class LeadResolver {
     try {
       return await this.leadRepository.find();
     } catch (error) {
-      // throw new AppError("Error fetching leads", INTERNAL_SERVER_ERROR);
       throw new GraphQLError("Error fetching leads", {
         extensions: { code: INTERNAL_SERVER_ERROR },
       });
@@ -40,9 +39,10 @@ export class LeadResolver {
   @Mutation(() => Lead)
   async registerLead(@Arg("data") data: RegisterInput): Promise<Lead> {
     try {
-      const lead = AppDataSource.getRepository(Lead).create(data);
-      return this.leadRepository.save(lead);
+      const lead = this.leadRepository.create(data);
+      return await this.leadRepository.save(lead);
     } catch (error) {
+      console.error("Register Lead Error:", error);
       throw new GraphQLError("Failed to register lead", {
         extensions: { code: BAD_REQUEST },
       });

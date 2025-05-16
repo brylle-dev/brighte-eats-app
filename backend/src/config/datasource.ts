@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { Lead } from "../entities/lead.entity";
+
 import {
   DB_HOST,
   DB_PASSWORD,
@@ -7,6 +7,7 @@ import {
   DB_USERNAME,
   DB_NAME,
 } from "../constants/env";
+import { Lead } from "../entities/lead.entity";
 
 const synchronize = process.env.NODE_ENV !== "production";
 

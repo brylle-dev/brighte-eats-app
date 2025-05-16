@@ -8,16 +8,15 @@ import path from "path";
 import { connectToDatabase } from "./config/datasource";
 import { LeadResolver } from "./graphql/resolvers/lead.resolver";
 
-const boot = async () => {
+(async () => {
   await connectToDatabase();
   console.log("Data Source has been initialized!");
-  // build the GraphQL schema
+
   const schema = await buildSchema({
     resolvers: [LeadResolver],
-    // Create 'schema.graphql' file with schema definition in current directory
     emitSchemaFile: path.resolve(__dirname, "graphql/schema.graphql"),
   });
-  // Create Apollo Server instance
+
   const apolloServer = new ApolloServer({
     schema,
   });
@@ -27,8 +26,6 @@ const boot = async () => {
   });
 
   console.log(`🚀 Server ready at: ${url}`);
-};
-
-boot().catch((error) => {
+})().catch((error) => {
   console.error("Error starting server:", error);
 });
