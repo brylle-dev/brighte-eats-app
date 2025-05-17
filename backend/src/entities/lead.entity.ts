@@ -2,10 +2,12 @@ import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { ServiceType } from "../constants/serviceTypes";
 import { User } from "./user.entity";
@@ -33,4 +35,10 @@ export class Lead extends BaseEntity {
   @JoinColumn()
   @Field(() => User)
   user!: User;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }

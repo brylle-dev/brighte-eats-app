@@ -2,9 +2,11 @@ import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { IsEmail } from "class-validator";
 import { Lead } from "./lead.entity";
@@ -35,4 +37,10 @@ export class User {
 
   @OneToOne(() => Lead, (lead: Lead) => lead.user)
   lead!: Lead;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }

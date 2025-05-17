@@ -9,6 +9,11 @@ type Lead {
   user: User!
 }
 
+type LeadRecord {
+  leads: [Lead!]!
+  totalCount: Int!
+}
+
 type Mutation {
   registerLead(data: RegisterInput!): Lead!
 }
@@ -16,7 +21,7 @@ type Mutation {
 type Query {
   getLeadByEmail(email: String!): Lead
   getLeadById(id: Float!): Lead
-  getLeads: [Lead!]!
+  leadList(skip: Int! = 0, take: Int! = 10): LeadRecord!
 }
 
 input RegisterInput {

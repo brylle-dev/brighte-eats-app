@@ -1,26 +1,15 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Leads from "./pages/Leads";
 
-import "./App.css";
-import { gql, useQuery } from "@apollo/client";
-import { getLeadById, getLeads } from "./graphql/queries";
-import { Layout } from "antd";
-const { Header, Footer, Content } = Layout;
-
-const headerStyle: React.CSSProperties = {
-  textAlign: "center",
-  color: "#fff",
-  height: 64,
-  paddingInline: 48,
-  lineHeight: "64px",
-  backgroundColor: "#4096ff",
-};
-
-function App() {
+export default function App() {
   return (
     <Layout>
-      <Header style={headerStyle}>HEADER</Header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/leads" element={<Leads />} />
+      </Routes>
     </Layout>
   );
 }
-
-export default App;

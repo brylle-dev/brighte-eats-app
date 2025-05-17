@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver, Int } from "type-graphql";
 import { Lead } from "../entities/lead.entity";
 import { AppDataSource } from "../config/datasource";
 import { RegisterInput } from "./types/register.inputs";
@@ -10,17 +10,29 @@ import {
 } from "../constants/http";
 import { GraphQLError } from "graphql";
 import { User } from "../entities/user.entity";
+import { LeadRecord } from "./types/lead.output";
 
 @Resolver()
 export class LeadResolver {
   private leadRepository = AppDataSource.getRepository(Lead);
   private userRepository = AppDataSource.getRepository(User);
 
-  @Query(() => [Lead])
-  async getLeads(): Promise<Lead[]> {
+  @Query(() => LeadRecord)
+  async leadList(
+    @Arg("skip", () => Int, { defaultValue: 0 }) skip: number,
+    @Arg("take", () => Int, { defaultValue: 10 }) take: number
+  ): Promise<LeadRecord> {
     try {
-      return await this.leadRepository.find({ relations: ["User"] });
+      const [leads, totalCount] = await this.leadRepository.findAndCount({
+        skip,
+        take,
+        relations: ["user"],
+        order: { createdAt: "DESC" },
+      });
+
+      return { leads, totalCount };
     } catch (error) {
+      console.log("Error fetching leads", error);
       throw new GraphQLError("Error fetching leads", {
         extensions: { code: INTERNAL_SERVER_ERROR },
       });
@@ -32,7 +44,7 @@ export class LeadResolver {
     try {
       return await this.leadRepository.findOne({
         where: { id },
-        relations: ["User"],
+        relations: ["user"],
       });
     } catch (error) {
       throw new GraphQLError(`Lead with id ${id} not found`, {
