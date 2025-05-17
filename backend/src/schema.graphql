@@ -4,12 +4,9 @@
 # -----------------------------------------------
 
 type Lead {
-  email: String!
   id: ID!
-  mobile: String!
-  name: String!
-  postcode: String!
   services: [ServiceType!]!
+  user: User!
 }
 
 type Mutation {
@@ -17,6 +14,7 @@ type Mutation {
 }
 
 type Query {
+  getLeadByEmail(email: String!): Lead
   getLeadById(id: Float!): Lead
   getLeads: [Lead!]!
 }
@@ -33,4 +31,12 @@ enum ServiceType {
   DELIVERY
   PAYMENT
   PICK_UP
+}
+
+type User {
+  email: String!
+  id: ID!
+  mobile: String!
+  name: String!
+  postcode: String!
 }

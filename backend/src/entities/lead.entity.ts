@@ -1,6 +1,14 @@
 import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { ServiceType } from "../constants/serviceTypes";
+import { User } from "./user.entity";
 
 registerEnumType(ServiceType, {
   name: "ServiceType", // GraphQL enum name
@@ -9,25 +17,9 @@ registerEnumType(ServiceType, {
 @Entity()
 @ObjectType()
 export class Lead extends BaseEntity {
-  @Field((_type) => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
-  readonly id!: number;
-
-  @Field()
-  @Column()
-  name!: string;
-
-  @Field()
-  @Column()
-  email!: string;
-
-  @Field()
-  @Column()
-  mobile!: string;
-
-  @Field()
-  @Column()
-  postcode!: string;
+  id!: number;
 
   @Field(() => [ServiceType])
   @Column({
@@ -36,4 +28,9 @@ export class Lead extends BaseEntity {
     array: true,
   })
   services!: ServiceType[];
+
+  @OneToOne(() => User, { cascade: true })
+  @JoinColumn()
+  @Field(() => User)
+  user!: User;
 }

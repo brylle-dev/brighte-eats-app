@@ -6,7 +6,7 @@ import { PORT } from "./constants/env";
 import { buildSchema } from "type-graphql";
 import path from "path";
 import { connectToDatabase } from "./config/datasource";
-import { LeadResolver } from "./graphql/resolvers/lead.resolver";
+import { LeadResolver } from "./resolvers/lead.resolver";
 
 (async () => {
   await connectToDatabase();
@@ -14,7 +14,7 @@ import { LeadResolver } from "./graphql/resolvers/lead.resolver";
 
   const schema = await buildSchema({
     resolvers: [LeadResolver],
-    emitSchemaFile: path.resolve(__dirname, "graphql/schema.graphql"),
+    emitSchemaFile: path.resolve(__dirname, "schema.graphql"),
   });
 
   const apolloServer = new ApolloServer({

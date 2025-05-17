@@ -1,6 +1,6 @@
 import { InputType, Field } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
-import { ServiceType } from "../../../constants/serviceTypes";
+import { ServiceType } from "../../constants/serviceTypes";
 
 @InputType()
 export class RegisterInput {

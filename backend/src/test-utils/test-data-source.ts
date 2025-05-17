@@ -1,7 +1,7 @@
-// src/config/test-datasource.ts
 import { DataSource } from "typeorm";
 import { Lead } from "../entities/lead.entity";
 import "dotenv/config";
+import { User } from "../entities/user.entity";
 
 export const TestDataSource = new DataSource({
   type: "postgres",
@@ -12,5 +12,5 @@ export const TestDataSource = new DataSource({
   database: process.env.TEST_DB_NAME || "brighte_eats_test",
   synchronize: true,
   dropSchema: true, // Clear DB on each run
-  entities: [Lead],
+  entities: [Lead, User],
 });

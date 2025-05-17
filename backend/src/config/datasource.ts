@@ -8,6 +8,7 @@ import {
   DB_NAME,
 } from "../constants/env";
 import { Lead } from "../entities/lead.entity";
+import { User } from "../entities/user.entity";
 
 const synchronize = process.env.NODE_ENV !== "production";
 
@@ -20,7 +21,7 @@ export const AppDataSource = new DataSource({
   database: DB_NAME,
   synchronize,
   logging: true,
-  entities: [Lead],
+  entities: [Lead, User],
   subscribers: [],
   migrations: [],
 });
