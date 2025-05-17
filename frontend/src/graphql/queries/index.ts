@@ -23,11 +23,14 @@ export const GET_LEAD_BY_ID = gql`
   query GetLeadById($id: Float!) {
     getLeadById(id: $id) {
       id
-      name
-      email
-      mobile
-      postcode
       services
+      user {
+        email
+        id
+        mobile
+        name
+        postcode
+      }
     }
   }
 `;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,6 +12,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import ServiceBadge from "./ServiceBadge";
 import { GET_LEAD_LIST } from "@/graphql/queries";
+import { Link } from "react-router-dom";
 
 type UserType = {
   id: number;
@@ -54,8 +55,8 @@ export default function LeadTable() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <Table>
+    <div className="max-w-l mx-auto">
+      <Table className="max-w-full mx-auto">
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
@@ -64,6 +65,7 @@ export default function LeadTable() {
             <TableHead>Mobile</TableHead>
             <TableHead>Postcode</TableHead>
             <TableHead>Services</TableHead>
+            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -79,6 +81,16 @@ export default function LeadTable() {
                   {lead.services.map((service: string) => (
                     <ServiceBadge key={service} text={service} />
                   ))}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div>
+                  <Button
+                    variant={"outline"}
+                    className="text-white cursor-pointer"
+                  >
+                    <Link to={`/lead/${lead.id}`}>View</Link>
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>
